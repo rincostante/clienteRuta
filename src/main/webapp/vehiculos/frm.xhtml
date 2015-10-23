@@ -1,0 +1,137 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/WEB-INF/facelets/templates/entidadTemplate.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.Aplicacion}" />
+        </ui:define>
+        <ui:define name="content">    
+            <f:metadata>  
+                <f:event listener="#{mbVehiculo.iniciar}" type="preRenderView"></f:event>  
+            </f:metadata>
+            <h:form>
+                <p:panel id="princ" header="Ingrese el dominio para realizar la búsqueda del Vehículo (Sin '-')" style="position: absolute; top:15%; left:50%; width:700px; margin-left:-350px;">
+                    <h:panelGrid columns="8" id="botones" >
+                        <p:growl id="growl" showDetail="false" sticky="true"/>
+                        <p:outputLabel value="Dominio" for="dominio" />
+                        <p:inputText value="#{mbVehiculo.dominio}" id="dominio" style="width:110px" >
+                            <f:validateLength maximum="6" minimum="6" />
+                        </p:inputText>
+                        <p:commandButton icon="ui-icon-refresh" rendered="#{not mbVehiculo.responseOk}"  >
+                            <p:ajax update="botones" resetValues="true"/>
+                        </p:commandButton>
+                        <p:commandButton value="Buscar" onclick="PF('dlg1').show();" oncomplete="PF('dlg1').hide();"  
+                                         icon="ui-icon-zoomin" action="#{mbVehiculo.mostrarVehiculo}" update="dataVehiculo, dataRto, botones" 
+                                         rendered="#{not mbVehiculo.responseOk}" />
+                        <p:commandButton value="Limpiar" icon="ui-icon-cancel" rendered="#{mbVehiculo.responseOk}" 
+                                         actionListener="#{mbVehiculo.limpiarVehiculo}" update="dataVehiculo, princ" />
+                        <p:commandButton value="Imprimir" type="button" icon="ui-icon-print" 
+                                         rendered="#{mbVehiculo.responseOk}">
+                            <p:printer target="princ" />
+                        </p:commandButton>
+                    </h:panelGrid>
+                    <br/>
+                    <p:panel id="vehiculo" header="Datos del vehículo" toggleable="true" >
+                        <h:panelGrid columns="2" id="dataVehiculo">
+
+                            <h:outputLabel value="Dominio: " rendered="#{mbVehiculo.responseOk}" />
+                            <h:outputText value="#{mbVehiculo.current.dominio}" rendered="#{mbVehiculo.responseOk}" />  
+
+                            <h:outputLabel value="Año: " rendered="#{mbVehiculo.responseOk}" />
+                            <h:outputText value="#{mbVehiculo.current.anioModelo}" rendered="#{mbVehiculo.responseOk}" />
+
+                            <h:outputLabel value="N° Chasis: " rendered="#{mbVehiculo.responseOk}"/>
+                            <h:outputText value="#{mbVehiculo.current.nroChasis}" rendered="#{mbVehiculo.responseOk}" />  
+
+                            <h:outputLabel value="Tipo de vehículo: " rendered="#{mbVehiculo.responseOk}" />
+                            <h:outputText value="#{mbVehiculo.current.tipoVehiculo}" rendered="#{mbVehiculo.responseOk}" />  
+
+                            <h:outputLabel value="Cód. tipo Vehículo: " rendered="#{mbVehiculo.responseOk}" />
+                            <h:outputText value="#{mbVehiculo.current.codigoTipoVehiculo}" rendered="#{mbVehiculo.responseOk}" />  
+
+                            <h:outputLabel value="Cetegoría: " rendered="#{mbVehiculo.responseOk}" />
+                            <h:outputText value="#{mbVehiculo.current.categoria}" rendered="#{mbVehiculo.responseOk}" />  
+
+                            <h:outputLabel value="Marca Chasis: " rendered="#{mbVehiculo.responseOk}" />
+                            <h:outputText value="#{mbVehiculo.current.marcaChasis}" rendered="#{mbVehiculo.responseOk}" />  
+
+                            <h:outputLabel value="Modelo Chasis: " rendered="#{mbVehiculo.responseOk}" />
+                            <h:outputText value="#{mbVehiculo.current.modeloChasis}" rendered="#{mbVehiculo.responseOk}" />    
+
+                            <h:outputLabel value="Marca motor: " rendered="#{mbVehiculo.responseOk}" />
+                            <h:outputText value="#{mbVehiculo.current.marcaMotor}" rendered="#{mbVehiculo.responseOk}" />  
+
+                            <h:outputLabel value="Marca Carrocería: " rendered="#{mbVehiculo.responseOk}" />
+                            <h:outputText value="#{mbVehiculo.current.marcaCarroceria}" rendered="#{mbVehiculo.responseOk}" />  
+
+                            <h:outputLabel value="Tipo de Caja: " rendered="#{mbVehiculo.responseOk}" />
+                            <h:outputText value="#{mbVehiculo.current.tipoCaja}" rendered="#{mbVehiculo.responseOk}" /> 
+
+                            <h:outputLabel value="Tipo de Carga: " rendered="#{mbVehiculo.responseOk}" />
+                            <h:outputText value="#{mbVehiculo.current.tipoCarga}" rendered="#{mbVehiculo.responseOk}" />  
+
+                            <h:outputLabel value="Configuración de Ejes: " rendered="#{mbVehiculo.responseOk}" />
+                            <h:outputText value="#{mbVehiculo.current.configuracionEjes}" rendered="#{mbVehiculo.responseOk}" /> 
+
+                            <h:outputLabel value="Cantidad de ejes: " rendered="#{mbVehiculo.responseOk}" />
+                            <h:outputText value="#{mbVehiculo.current.cantEjes}" rendered="#{mbVehiculo.responseOk}" />  
+
+                            <h:outputLabel value="Cargas Peligrosas: " rendered="#{mbVehiculo.responseOk}" />
+                            <h:outputText value="#{mbVehiculo.current.cargasPeligrosas}" rendered="#{mbVehiculo.responseOk}" />  
+
+                            <h:outputLabel value="Versión RUTA: " rendered="#{mbVehiculo.responseOk}" />
+                            <h:outputText value="#{mbVehiculo.current.versionRUTA}" rendered="#{mbVehiculo.responseOk}" />
+                            
+                            <h:outputLabel value="Versión WS: " rendered="#{mbVehiculo.responseOk}" />
+                            <h:outputText value="#{mbVehiculo.current.versionWS}" rendered="#{mbVehiculo.responseOk}" />
+                        </h:panelGrid>
+                    </p:panel>
+                    <p:panel id="rto" header="Datos de la RTO" toggleable="true" >
+                        <h:panelGrid columns="2" id="dataRto">
+                            
+                            <h:outputLabel value="N° de Planilla: " rendered="#{mbVehiculo.rtoOk}"/>
+                            <h:outputText value="#{mbVehiculo.current.RTO.nroPlanilla}" rendered="#{mbVehiculo.rtoOk}" />  
+
+                            <h:outputLabel value="Cod. de Auditoría: " rendered="#{mbVehiculo.rtoOk}"/>
+                            <h:outputText value="#{mbVehiculo.current.RTO.codAuditoria}" rendered="#{mbVehiculo.rtoOk}" />
+
+                            <h:outputLabel value="Cod. Taller: " rendered="#{mbVehiculo.rtoOk}"/>
+                            <h:outputText value="#{mbVehiculo.current.RTO.codTaller}" rendered="#{mbVehiculo.rtoOk}" />  
+
+                            <h:outputLabel value="Fecha de revisión: " rendered="#{mbVehiculo.rtoOk}" />
+                            <h:outputText value="#{mbVehiculo.current.RTO.fechaRevision}" rendered="#{mbVehiculo.rtoOk}" />  
+
+                            <h:outputLabel value="Fecha de vencimiento: " rendered="#{mbVehiculo.rtoOk}" />
+                            <h:outputText value="#{mbVehiculo.current.RTO.fechaVencimiento}" rendered="#{mbVehiculo.rtoOk}" />  
+
+                            <h:outputLabel value="Cod. de Tipo de Uso: " rendered="#{mbVehiculo.rtoOk}" />
+                            <h:outputText value="#{mbVehiculo.current.RTO.codTipoUso}" rendered="#{mbVehiculo.rtoOk}" />  
+
+                            <h:outputLabel value="Serie de Certificado: " rendered="#{mbVehiculo.rtoOk}" />
+                            <h:outputText value="#{mbVehiculo.current.RTO.serieCertificado}" rendered="#{mbVehiculo.rtoOk}" />    
+
+                            <h:outputLabel value="N° Certificado: " rendered="#{mbVehiculo.rtoOk}" />
+                            <h:outputText value="#{mbVehiculo.current.RTO.nroCertificado}" rendered="#{mbVehiculo.rtoOk}" />  
+
+                            <h:outputLabel value="Marca tacógrafo: " rendered="#{mbVehiculo.rtoOk}" />
+                            <h:outputText value="#{mbVehiculo.current.RTO.marcaTacografo}" rendered="#{mbVehiculo.rtoOk}" />  
+
+                            <h:outputLabel value="N° de tacógrafo: " rendered="#{mbVehiculo.rtoOk}" />
+                            <h:outputText value="#{mbVehiculo.current.RTO.nroTacografo}" rendered="#{mbVehiculo.rtoOk}" />  
+
+                        </h:panelGrid>
+                    </p:panel>
+
+                    <p:dialog header="Ejecutando..." widgetVar="dlg1" minHeight="40">
+                        <h:outputText value="Por favor, aguarde mientras el servicio retorna la información solicitada" />
+                    </p:dialog>
+                </p:panel>
+            </h:form>
+        </ui:define> 
+    </ui:composition>
+</html>
+

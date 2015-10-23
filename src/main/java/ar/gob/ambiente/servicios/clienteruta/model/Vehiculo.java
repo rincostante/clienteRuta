@@ -2,7 +2,6 @@
 package ar.gob.ambiente.servicios.clienteruta.model;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
  * Clase que encapsula la información perteneciente a los Vehículos de transporte de Residuos Peligrosos
@@ -23,9 +22,9 @@ public class Vehiculo implements Serializable{
     /**
      * Cuit de la Empresa a la que pertenece el Vehículo
      */
-    private Long cuit;
+    private String cuit;
     
-    private int anioModelo;
+    private String anioModelo;
     
     private String nroChasis;
     
@@ -55,33 +54,56 @@ public class Vehiculo implements Serializable{
      */
     private String configuracionEjes;
     
-    private int cantEjes;
+    private String cantEjes;
     
     /**
      * True si esta declarado realiza cargas peligrosas
      */
     private boolean cargasPeligrosas;
-    
-    /**
-     * Objeto que encapsula los datos de la Revisión técnica del vehículo
-     */
-    private Rto rto;
+
     
     /**
      * [2003,2012]
      */
-    private int versionRUTA;
+    private String versionRUTA;
     
     /**
      * Versión del servicio web
      */
     private String versionWS;
     
+    /**
+     * En este campo se encapsularán los datos de la rto del vehículo
+     * cuando el objeto se obtiene desde obtenerVehiculo
+     */
+    //private Rto rto;
+    
+    /**
+     * Cadena para guardar el contenido de la rto cuando el vehículo se obtiene desde obtenerFlota
+     */
+    private Rto RTO;
+    
   
     /*******************
      * Geters y Seters *
      *******************/
 
+    public Rto getRTO() {
+        return RTO;
+    }
+
+    public void setRTO(Rto RTO) {
+        this.RTO = RTO;
+    }
+/*
+    public Rto getRto() {
+        return rto;
+    }
+
+    public void setRto(Rto rto) {
+        this.rto = rto;
+    }
+*/
     public String getDominio() {
         return dominio;
     }
@@ -98,19 +120,19 @@ public class Vehiculo implements Serializable{
         this.razonSocial = razonSocial;
     }
 
-    public Long getCuit() {
+    public String getCuit() {
         return cuit;
     }
 
-    public void setCuit(Long cuit) {
+    public void setCuit(String cuit) {
         this.cuit = cuit;
     }
 
-    public int getAnioModelo() {
+    public String getAnioModelo() {
         return anioModelo;
     }
 
-    public void setAnioModelo(int anioModelo) {
+    public void setAnioModelo(String anioModelo) {
         this.anioModelo = anioModelo;
     }
 
@@ -202,11 +224,11 @@ public class Vehiculo implements Serializable{
         this.configuracionEjes = configuracionEjes;
     }
 
-    public int getCantEjes() {
+    public String getCantEjes() {
         return cantEjes;
     }
 
-    public void setCantEjes(int cantEjes) {
+    public void setCantEjes(String cantEjes) {
         this.cantEjes = cantEjes;
     }
 
@@ -218,19 +240,11 @@ public class Vehiculo implements Serializable{
         this.cargasPeligrosas = cargasPeligrosas;
     }
 
-    public Rto getRto() {
-        return rto;
-    }
-
-    public void setRto(Rto rto) {
-        this.rto = rto;
-    }
-
-    public int getVersionRUTA() {
+    public String getVersionRUTA() {
         return versionRUTA;
     }
 
-    public void setVersionRUTA(int versionRUTA) {
+    public void setVersionRUTA(String versionRUTA) {
         this.versionRUTA = versionRUTA;
     }
 
@@ -243,33 +257,44 @@ public class Vehiculo implements Serializable{
     }
     
     
-    /*************************
-     * Métodos sobreescritos *
-     *************************/    
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (dominio != null ? dominio.hashCode() : 0);
-        return hash;
-    }        
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Vehiculo other = (Vehiculo) obj;
-        if (!Objects.equals(this.dominio, other.dominio)) {
-            return false;
-        }
-        return true;
+    public Vehiculo(String dominio,
+        String razonSocial,
+        String cuit,
+        String anioModelo,
+        String nroChasis,
+        String tipoVehiculo,
+        String codigoTipoVehiculo,
+        String categoria,
+        String marcaChasis,
+        String modeloChasis,
+        String marcaMotor,
+        String marcaCarroceria,
+        String tipoCaja,
+        String tipoCarga,
+        String configuracionEjes,
+        String cantEjes,
+        boolean cargasPeligrosas,
+        String versionRUTA,
+        String versionWS){
+        
+        this.anioModelo = anioModelo;
+        this.cantEjes = cantEjes;
+        this.cargasPeligrosas = cargasPeligrosas;
+        this.categoria = categoria;
+        this.codigoTipoVehiculo = codigoTipoVehiculo;
+        this.configuracionEjes = configuracionEjes;
+        this.cuit = cuit;
+        this.dominio = dominio;
+        this.marcaCarroceria = marcaCarroceria;
+        this.marcaChasis = marcaChasis;
+        this.marcaMotor = marcaMotor;
+        this.modeloChasis = modeloChasis;
+        this.nroChasis = nroChasis;
+        this.razonSocial = razonSocial;
+        this.tipoCaja = tipoCaja;
+        this.tipoCarga = tipoCarga;
+        this.tipoVehiculo = tipoVehiculo;
+        this.versionRUTA = versionRUTA;
+        this.versionWS = versionWS;
     }
-    
-    @Override
-    public String toString() {
-        return "ar.gob.ambiente.servicios.clienteruta.model.Vehiculo[ dominio=" + dominio + " ]";
-    }     
 }

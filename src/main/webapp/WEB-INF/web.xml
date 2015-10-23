@@ -2,7 +2,7 @@
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
-        <param-value>Development</param-value>
+        <param-value>Production</param-value>
     </context-param>
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
@@ -21,4 +21,12 @@
     <welcome-file-list>
         <welcome-file>faces/index.xhtml</welcome-file>
     </welcome-file-list>
+    <security-constraint><!--Exclude css, js and images here -->
+       <web-resource-collection>
+          <web-resource-name>Exclude from Security</web-resource-name>
+          <url-pattern>/img/*</url-pattern><!-- No security for images -->
+          <url-pattern>/css/*</url-pattern><!-- No security for css -->
+          <url-pattern>/js/*</url-pattern><!-- No security for js -->
+       </web-resource-collection>
+    </security-constraint>
 </web-app>

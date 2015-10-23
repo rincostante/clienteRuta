@@ -11,6 +11,16 @@ import java.util.ArrayList;
  */
 public class Flota implements Serializable{
     /**
+     * Vesrión del WS
+     */
+    private String versionWS;
+    
+    /**
+     * Objeto que encapsula los datos del error si este se produjera
+     */
+    private Error error;
+    
+    /**
      * Listado de los vehículos que constituyen la Flota
      */
     private ArrayList<Vehiculo> listaVehiculos;
@@ -20,10 +30,39 @@ public class Flota implements Serializable{
      */
     private int total;
     
+    /**
+     * Cadena que indica el resultado de la búsqueda
+     */
+    private String result;
+    
     
     /*******************
      * Geters y seters *
      *******************/
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
+
+    public String getVersionWS() {
+        return versionWS;
+    }
+
+    public void setVersionWS(String versionWS) {
+        this.versionWS = versionWS;
+    }
+
+    public Error getError() {
+        return error;
+    }
+
+    public void setError(Error error) {
+        this.error = error;
+    }
 
     public ArrayList<Vehiculo> getListaVehiculos() {
         return listaVehiculos;

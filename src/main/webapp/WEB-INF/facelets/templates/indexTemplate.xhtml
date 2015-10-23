@@ -19,6 +19,9 @@
         </f:facet>
     </h:head>
     <h:body>
+        <f:metadata>  
+            <f:event listener="#{mbIndex.iniciar}" type="preRenderView"></f:event>  
+        </f:metadata>
         <p:layout fullPage="true">
             <p:layoutUnit id="top" styleClass="top" position="north" >
                 <h:panelGrid id="topPg" columns="3" styleClass="topPg" >
@@ -30,11 +33,15 @@
             <p:layoutUnit position="center">
                 <h:form>
                     <p:menubar>
-                        <p:menuitem value="Inicio" 
+                        <p:menuitem value="Empresas" 
                                     url="#{bundle.Servidor}#{bundle.RutaAplicacion}" />
+                        <p:menuitem value="Flotas" url="#{bundle.Servidor}#{bundle.RutaAplicacion}/#{bundle.RaizFlotas}/frm.xhtml"/>
+                        <p:menuitem value="Vehículos" url="#{bundle.Servidor}#{bundle.RutaAplicacion}/#{bundle.RaizVehiculos}/frm.xhtml"/>
 
                         <f:facet name="options">
-                            <p:commandLink value="Volver a Aplicaciones" />
+                            <p:commandButton process="@this" value="Volver a las Aplicaciones" icon="ui-icon-extlink" 
+                                             actionListener="#{mbIndex.logout}" 
+                                             oncomplete="volverApp(xhr, status, args)" />
                         </f:facet>   
                     </p:menubar>
                     <ui:insert name="content">Página en construcción</ui:insert>
@@ -46,6 +53,14 @@
             </p:layoutUnit>
         </p:layout>
     </h:body>
-
+    <script type="text/javascript">
+        //<![CDATA[
+        function volverApp(xhr, status, args){
+            setTimeout(function(){
+                window.location = '#{bundle.RutaAplicaciones10Desa}';
+            }, 500);
+        }
+        //]]>
+    </script>      
 </html>
 

@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Detalle del Vehículo seleccionado</title>
+        <style type="text/css">
+            .ui-widget {
+                font-size: 80%;
+            }
+        </style>
+    </h:head>
+    <h:body>
+            <h:form id="frmVehiculoView" style="text-align: left">
+
+                <p:messages id="messages" />
+                <p:dialog id="dlg" resizable="false" />
+                    <p:panel id="vehiculo" header="Datos del vehículo" toggleable="true" >
+                        <h:panelGrid id="dataVehiculo" columns="2">
+
+                            <h:outputLabel value="Dominio: "/>
+                            <h:outputText value="#{mbEmpresa.vehiculo.dominio}" />  
+
+                            <h:outputLabel value="Año: "/>
+                            <h:outputText value="#{mbEmpresa.vehiculo.anioModelo}" />
+
+                            <h:outputLabel value="N° Chasis: "/>
+                            <h:outputText value="#{mbEmpresa.vehiculo.nroChasis}" />  
+
+                            <h:outputLabel value="Tipo de vehículo: "/>
+                            <h:outputText value="#{mbEmpresa.vehiculo.tipoVehiculo}" />  
+
+                            <h:outputLabel value="Cód. tipo Vehículo: "/>
+                            <h:outputText value="#{mbEmpresa.vehiculo.codigoTipoVehiculo}" />  
+
+                            <h:outputLabel value="Cetegoría: "/>
+                            <h:outputText value="#{mbEmpresa.vehiculo.categoria}" />  
+
+                            <h:outputLabel value="Marca Chasis: "/>
+                            <h:outputText value="#{mbEmpresa.vehiculo.marcaChasis}" />  
+
+                            <h:outputLabel value="Modelo Chasis: "/>
+                            <h:outputText value="#{mbEmpresa.vehiculo.modeloChasis}" />    
+
+                            <h:outputLabel value="Marca motor: "/>
+                            <h:outputText value="#{mbEmpresa.vehiculo.marcaMotor}" />  
+
+                            <h:outputLabel value="Marca Carrocería: "/>
+                            <h:outputText value="#{mbEmpresa.vehiculo.marcaCarroceria}" />  
+
+                            <h:outputLabel value="Tipo de Caja: "/>
+                            <h:outputText value="#{mbEmpresa.vehiculo.tipoCaja}" /> 
+
+                            <h:outputLabel value="Tipo de Carga: "/>
+                            <h:outputText value="#{mbEmpresa.vehiculo.tipoCarga}" />  
+
+                            <h:outputLabel value="Configuración de Ejes: "/>
+                            <h:outputText value="#{mbEmpresa.vehiculo.configuracionEjes}" /> 
+
+                            <h:outputLabel value="Cantidad de ejes: "/>
+                            <h:outputText value="#{mbEmpresa.vehiculo.cantEjes}" />  
+
+                            <h:outputLabel value="Cargas Peligrosas: "/>
+                            <h:outputText value="#{mbEmpresa.vehiculo.cargasPeligrosas}" />  
+
+                            <h:outputLabel value="Versión RUTA: "/>
+                            <h:outputText value="#{mbEmpresa.vehiculo.versionRUTA}" />
+
+                            <h:outputLabel value="Versión WS: "/>
+                            <h:outputText value="#{mbEmpresa.vehiculo.versionWS}" />
+
+                        </h:panelGrid>
+                    </p:panel>
+                <p:panel id="rto" header="Datos de la RTO" toggleable="true" >
+                    <h:panelGrid columns="2" id="dataRto">
+
+                        <h:outputLabel value="N° de Planilla: " rendered="#{mbEmpresa.rtoOk}"/>
+                        <h:outputText value="#{mbEmpresa.vehiculo.RTO.nroPlanilla}" rendered="#{mbEmpresa.rtoOk}" />  
+
+                        <h:outputLabel value="Cod. de Auditoría: " rendered="#{mbEmpresa.rtoOk}"/>
+                        <h:outputText value="#{mbEmpresa.vehiculo.RTO.codAuditoria}" rendered="#{mbEmpresa.rtoOk}" />
+
+                        <h:outputLabel value="Cod. Taller: " rendered="#{mbEmpresa.rtoOk}"/>
+                        <h:outputText value="#{mbEmpresa.vehiculo.RTO.codTaller}" rendered="#{mbEmpresa.rtoOk}" />  
+
+                        <h:outputLabel value="Fecha de revisión: " rendered="#{mbEmpresa.rtoOk}" />
+                        <h:outputText value="#{mbEmpresa.vehiculo.RTO.fechaRevision}" rendered="#{mbEmpresa.rtoOk}" />  
+
+                        <h:outputLabel value="Fecha de vencimiento: " rendered="#{mbEmpresa.rtoOk}" />
+                        <h:outputText value="#{mbEmpresa.vehiculo.RTO.fechaVencimiento}" rendered="#{mbEmpresa.rtoOk}" />  
+
+                        <h:outputLabel value="Cod. de Tipo de Uso: " rendered="#{mbEmpresa.rtoOk}" />
+                        <h:outputText value="#{mbEmpresa.vehiculo.RTO.codTipoUso}" rendered="#{mbEmpresa.rtoOk}" />  
+
+                        <h:outputLabel value="Serie de Certificado: " rendered="#{mbEmpresa.rtoOk}" />
+                        <h:outputText value="#{mbEmpresa.vehiculo.RTO.serieCertificado}" rendered="#{mbEmpresa.rtoOk}" />    
+
+                        <h:outputLabel value="N° Certificado: " rendered="#{mbEmpresa.rtoOk}" />
+                        <h:outputText value="#{mbEmpresa.vehiculo.RTO.nroCertificado}" rendered="#{mbEmpresa.rtoOk}" />  
+
+                        <h:outputLabel value="Marca tacógrafo: " rendered="#{mbEmpresa.rtoOk}" />
+                        <h:outputText value="#{mbEmpresa.vehiculo.RTO.marcaTacografo}" rendered="#{mbEmpresa.rtoOk}" />  
+
+                        <h:outputLabel value="N° de tacógrafo: " rendered="#{mbEmpresa.rtoOk}" />
+                        <h:outputText value="#{mbEmpresa.vehiculo.RTO.nroTacografo}" rendered="#{mbEmpresa.rtoOk}" />  
+
+                    </h:panelGrid>
+                </p:panel>
+                <p:dialog header="Ejecutando..." widgetVar="dlg1" minHeight="40">
+                    <h:outputText value="Por favor, aguarde mientras el servicio retorna la información solicitada" />
+                </p:dialog>
+                <p:toolbar>
+                    <f:facet name="left">
+                        <p:commandButton value="Imprimir" type="button" icon="ui-icon-print" style="display:block;margin-bottom: 20px">
+                            <p:printer target="frmVehiculoView" />
+                        </p:commandButton>
+                    </f:facet>
+                </p:toolbar>
+
+            </h:form>
+    </h:body> 
+    
+</html>      
+

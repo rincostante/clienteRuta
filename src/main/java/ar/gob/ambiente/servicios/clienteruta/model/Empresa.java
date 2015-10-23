@@ -15,7 +15,7 @@ public class Empresa implements Serializable{
     /**
      * Cuit de la Empresa no debe repetirse
      */
-    private Long cuit;
+    private String cuit;
     
     /**
      * Razón social por la cual es conocida la Empresa
@@ -77,15 +77,41 @@ public class Empresa implements Serializable{
      */
     private String versionWS;
     
+    public Empresa(String cuit,
+            String razonSocial,
+            String tipoTransportista,
+            String categoria,
+            ArrayList<String> codigosCategorias,
+            String direccion,
+            String localidad,
+            String provincia,
+            String paisCodigo,
+            String telefono,
+            String email,
+            boolean cargasPeligrosas,
+            String versionWS){
+        this.categoria = categoria;
+        this.cuit = cuit;
+        this.direccion = direccion;
+        this.email = email;
+        this.localidad = localidad;
+        this.paisCodigo = paisCodigo;
+        this.provincia = provincia;
+        this.razonSocial = razonSocial;
+        this.telefono = telefono;
+        this.tipoTransportista = tipoTransportista;
+        this.versionWS = versionWS;
+    }
+    
     /*******************
      * Geters y Seters *
      *******************/
     
-    public Long getCuit() {
+    public String getCuit() {
         return cuit;
     }
 
-    public void setCuit(Long cuit) {
+    public void setCuit(String cuit) {
         this.cuit = cuit;
     }
 
@@ -184,35 +210,4 @@ public class Empresa implements Serializable{
     public void setVersionWS(String versionWS) {
         this.versionWS = versionWS;
     }
-    
-    
-    /*************************
-     * Métodos sobreescritos *
-     *************************/    
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (cuit != null ? cuit.hashCode() : 0);
-        return hash;
-    }    
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Empresa other = (Empresa) obj;
-        if (!Objects.equals(this.cuit, other.cuit)) {
-            return false;
-        }
-        return true;
-    }
-    
-    @Override
-    public String toString() {
-        return "ar.gob.ambiente.servicios.clienteruta.model.Empresa[ cuit=" + cuit + " ]";
-    }    
 }

@@ -9,15 +9,74 @@
         <ui:define name="title">
             <h:outputText value="#{bundle.Aplicacion}" />
         </ui:define>
-        <ui:define name="content">         
+        <ui:define name="content">    
+            <f:metadata>  
+                <f:event listener="#{mbEmpresa.iniciar}" type="preRenderView"></f:event>  
+            </f:metadata>
             <h:form>
-                <p:panel header="Detalle de los contenidos de la aplicación" style="position: absolute; top:15%; left:50%; width:800px; margin-left:-400px;">
-                    <h:outputText value="[Página inicial que cuenta la aplicación, resúmen estadístico, gráficos, varios]" /><br></br>
-                    <h:panelGrid columns="2" >
+                <p:panel id="princ" header="Ingrese el CUIT para realizar la búsqueda de la Empresa (Sin '.' ni '-')" style="position: absolute; top:15%; left:50%; width:700px; margin-left:-350px;">
+                    <h:panelGrid columns="8" id="botones" >
+                        <p:growl id="growl" showDetail="false" sticky="true"/>
                         <p:outputLabel value="CUIT" for="cuit" />
-                        <p:inputText value="#{mbEmpresa.strCuit}" id="cuit" />
-                        <p:commandButton value="probar" action="#{mbEmpresa.mostrarEmpresa}" />
+                        <p:inputText value="#{mbEmpresa.strCuit}" id="cuit" style="width:110px" >
+                            <f:validateLength maximum="11" minimum="11" />
+                        </p:inputText>
+                        <p:commandButton icon="ui-icon-refresh" rendered="#{not mbEmpresa.responseOk}"  >
+                            <p:ajax update="botones" resetValues="true"/>
+                        </p:commandButton>
+                        <p:commandButton value="Buscar" onclick="PF('dlg1').show();" oncomplete="PF('dlg1').hide();"  
+                                         icon="ui-icon-zoomin" action="#{mbEmpresa.mostrarEmpresa}" update="dataEmpresa, botones"
+                                         rendered="#{not mbEmpresa.responseOk}"/>
+                        <p:commandButton value="Limpiar" icon="ui-icon-cancel" rendered="#{mbEmpresa.responseOk}" 
+                                         actionListener="#{mbEmpresa.limpiarEmpresa()}" update="dataEmpresa, princ" />
+                        <p:commandButton value="Flota" action="#{mbEmpresa.mostrarFlota}" 
+                                             onclick="PF('dlg1').show();" oncomplete="PF('dlg1').hide();"  
+                                             icon="ui-icon-zoomin" rendered="#{mbEmpresa.responseOk}" />
+                        <p:commandButton value="Imprimir" type="button" icon="ui-icon-print" 
+                                         rendered="#{mbEmpresa.responseOk}">
+                            <p:printer target="princ" />
+                        </p:commandButton>
                     </h:panelGrid>
+                    <br/>
+                    <h:panelGrid columns="2" id="dataEmpresa" >
+                        <h:outputLabel value="Razón Social: " rendered="#{mbEmpresa.responseOk}"/>
+                        <h:outputText value="#{mbEmpresa.current.razonSocial}" /> 
+                        
+                        <h:outputLabel value="Tipo de Transportista: " rendered="#{mbEmpresa.responseOk}"/>
+                        <h:outputText value="#{mbEmpresa.current.tipoTransportista}" />   
+                        
+                        <h:outputLabel value="Categoría: " rendered="#{mbEmpresa.responseOk}"/>
+                        <h:outputText value="#{mbEmpresa.current.categoria}" />
+                        
+                        <h:outputLabel value="Cod. Categorías: " rendered="#{mbEmpresa.responseOk}"/>
+                        <h:outputText value="#{mbEmpresa.current.codigosCategorias}" />
+                        
+                        <h:outputLabel value="Dirección: " rendered="#{mbEmpresa.responseOk}"/>
+                        <h:outputText value="#{mbEmpresa.current.direccion}" /> 
+                        
+                        <h:outputLabel value="Localidad: " rendered="#{mbEmpresa.responseOk}"/>
+                        <h:outputText value="#{mbEmpresa.current.localidad}" /> 
+
+                        <h:outputLabel value="Provincia: " rendered="#{mbEmpresa.responseOk}"/>
+                        <h:outputText value="#{mbEmpresa.current.provincia}" /> 
+                        
+                        <h:outputLabel value="Cod. País: " rendered="#{mbEmpresa.responseOk}"/>
+                        <h:outputText value="#{mbEmpresa.current.paisCodigo}" /> 
+                        
+                        <h:outputLabel value="Teléfono: " rendered="#{mbEmpresa.responseOk}"/>
+                        <h:outputText value="#{mbEmpresa.current.telefono}" /> 
+                        
+                        <h:outputLabel value="E-Mail: " rendered="#{mbEmpresa.responseOk}"/>
+                        <h:outputText value="#{mbEmpresa.current.email}" /> 
+                        
+                        <h:outputLabel value="Cargas peligrosas: " rendered="#{mbEmpresa.responseOk}"/>
+                        <h:outputText value="#{mbEmpresa.current.cargasPeligrosas}" /> 
+                        
+                    </h:panelGrid>
+
+                    <p:dialog header="Ejecutando..." widgetVar="dlg1" minHeight="40">
+                        <h:outputText value="Por favor, aguarde mientras el servicio retorna la información solicitada" />
+                    </p:dialog>
                 </p:panel>
             </h:form>
         </ui:define> 

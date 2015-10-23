@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Detalle de los Vehículos que conforman la flota de la Empresa</title>
+        <style type="text/css">
+            .ui-widget {
+                font-size: 80%;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <h:form id="frmClases">
+            <p:dataTable var="vehiculo" value="#{mbEmpresa.listVehiculos}" id="vhiculosList"
+                        rows="5" 
+                        paginator="true" 
+                        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+                        rowsPerPageTemplate="5,10,15">
+                <f:facet name="header">
+                    <p:commandButton icon="ui-icon-refresh" value="Listar" update="vhiculosList" style="margin-left: 10px"/>
+                    <p:commandButton value="Excel" ajax="false">
+                        <p:dataExporter type="xls" target="vhiculosList" fileName="ListadoFlota" />
+                    </p:commandButton>
+                    <p:commandButton value="Pdf" ajax="false">
+                        <p:dataExporter type="pdf" target="vhiculosList" fileName="ListadoFlota" preProcessor="#{mbEmpresa.preProcessPDF}"/>
+                    </p:commandButton>
+                </f:facet>
+                
+                <p:column headerText="Chasis" sortBy="#{vehiculo.marcaChasis}" filterBy="#{vehiculo.marcaChasis}" filterMatchMode="contains" >
+                    <h:outputText value="#{vehiculo.marcaChasis}" />
+                </p:column>
+
+                <p:column headerText="Dominio" sortBy="#{vehiculo.dominio}" filterBy="#{vehiculo.dominio}" filterMatchMode="contains" >
+                    <h:outputText value="#{vehiculo.dominio}" />
+                </p:column>
+
+                <p:column headerText="Año" sortBy="#{vehiculo.anioModelo}" filterBy="#{vehiculo.anioModelo}" filterMatchMode="contains" >
+                    <h:outputText value="#{vehiculo.anioModelo}" />
+                </p:column>
+
+                <p:column headerText="Tipo Veh." sortBy="#{vehiculo.tipoVehiculo}" filterBy="#{vehiculo.tipoVehiculo}" filterMatchMode="contains" >
+                    <h:outputText value="#{vehiculo.tipoVehiculo}" />
+                </p:column>
+
+                <p:column headerText="RTO venc." sortBy="#{vehiculo.RTO.fechaVencimiento}" filterBy="#{vehiculo.RTO.fechaVencimiento}" filterMatchMode="contains" >
+                    <h:outputText value="#{vehiculo.RTO.fechaVencimiento}" />
+                </p:column>
+
+                <p:column headerText="RTO serie" sortBy="#{vehiculo.RTO.serieCertificado}" filterBy="#{vehiculo.RTO.serieCertificado}" filterMatchMode="contains" >
+                    <h:outputText value="#{vehiculo.RTO.serieCertificado}" />
+                </p:column>
+
+                <p:column headerText="RTO N°" sortBy="#{vehiculo.RTO.nroCertificado}" filterBy="#{vehiculo.RTO.nroCertificado}" filterMatchMode="contains" >
+                    <h:outputText value="#{vehiculo.RTO.nroCertificado}" />
+                </p:column>
+                
+                <p:column headerText="Acc." style="width:35px" exportable="false" >
+                    <p:growl id="messages" showDetail="true" />
+                    <p:commandButton icon="ui-icon-zoomin" action="#{mbEmpresa.verVehiculo}" title="Ver Detalle">
+                        <f:setPropertyActionListener value="#{vehiculo}" target="#{mbEmpresa.vehiculo}" />
+                    </p:commandButton>                                     
+                </p:column>  
+
+            </p:dataTable>
+        </h:form>
+    </h:body>
+</html>
+

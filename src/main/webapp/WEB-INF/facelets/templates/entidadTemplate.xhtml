@@ -30,19 +30,14 @@
             <p:layoutUnit position="center">
                 <h:form>
                     <p:menubar>
-                        <p:menuitem value="Inicio" 
+                        <p:menuitem value="Empresas" 
                                     url="#{bundle.Servidor}#{bundle.RutaAplicacion}" /> 
-                        
-                        <p:submenu label="Seguridad" rendered="#{mbLogin.ambito == 'Seguridad'}">
-                            <p:menuitem value="Usuarios" 
-                                        url="#{bundle.Servidor}#{bundle.RutaAplicacion}/#{bundle.RaizUsuario}/list.xhtml"/>
-                            <p:menuitem value="Roles" 
-                                        url="#{bundle.Servidor}#{bundle.RutaAplicacion}/#{bundle.RaizRol}/list.xhtml"/>                                      
-                        </p:submenu> 
+                        <p:menuitem value="Flotas" url="#{bundle.Servidor}#{bundle.RutaAplicacion}/#{bundle.RaizFlotas}/frm.xhtml"/>
+                        <p:menuitem value="Vehículos" url="#{bundle.Servidor}#{bundle.RutaAplicacion}/#{bundle.RaizVehiculos}/frm.xhtml"/>
                         <f:facet name="options">
-                            <p:outputLabel value="Usuario: #{mbLogin.usLogeado.nombreCompleto}" style="margin-right:10px" />
-                            <p:commandButton value="App" icon="ui-icon-home" actionListener="#{mbLogin.logout}" oncomplete="home(xhr, status, args)" style="margin-right:10px" />
-                            <p:commandButton value="Cerrar sesión" icon="ui-icon-extlink" actionListener="#{mbLogin.logout}" oncomplete="logout(xhr, status, args)" />
+                            <p:commandButton process="@this" value="Volver a las Aplicaciones" icon="ui-icon-extlink" 
+                                             actionListener="#{mbIndex.logout}" 
+                                             oncomplete="volverApp(xhr, status, args)" />
                         </f:facet>   
                     </p:menubar>
                     <ui:insert name="content">Página en construcción</ui:insert>
@@ -53,21 +48,15 @@
                 <img src="../../resources/img/BloquePie.jpg" />
             </p:layoutUnit>
         </p:layout>
-    </h:body>
+    </h:body>     
     <script type="text/javascript">
         //<![CDATA[
-        function logout(xhr, status, args){
+        function volverApp(xhr, status, args){
             setTimeout(function(){
-                window.location = '/gestionAplicaciones/faces/logout.xhtml';
+                window.location = '#{bundle.RutaAplicaciones10Desa}';
             }, 500);
         }
-        
-        function home(xhr, status, args){
-            setTimeout(function(){
-                window.location = '/gestionAplicaciones';
-            }, 500);
-        }        
         //]]>
-    </script>        
+    </script>       
 </html>
 

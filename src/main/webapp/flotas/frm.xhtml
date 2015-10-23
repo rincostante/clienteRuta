@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/WEB-INF/facelets/templates/entidadTemplate.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.Aplicacion}" />
+        </ui:define>
+        <ui:define name="content">    
+            <f:metadata>  
+                <f:event listener="#{mbFlota.iniciar}" type="preRenderView"></f:event>  
+            </f:metadata>
+            <h:form>
+                <p:panel id="princ" header="Ingrese el CUIT para realizar la búsqueda de la Flota (Sin '.' ni '-')" style="position: absolute; top:15%; left:50%; width:900px; margin-left:-450px;">
+                    <h:panelGrid columns="7" id="botones" >
+                        <p:growl id="growl" showDetail="false" sticky="true"/>
+                        <p:outputLabel value="CUIT" for="cuit" />
+                        <p:inputText value="#{mbFlota.strCuit}" id="cuit" style="width:110px" >
+                            <f:validateLength maximum="11" minimum="11" />
+                        </p:inputText>
+                        <p:commandButton icon="ui-icon-refresh" rendered="#{not mbFlota.responseOk}" >
+                            <p:ajax update="botones" resetValues="true"/>
+                        </p:commandButton>
+                        <p:commandButton value="Buscar" onclick="PF('dlg1').show();" oncomplete="PF('dlg1').hide();"  
+                                         icon="ui-icon-zoomin" actionListener="#{mbFlota.mostrarFlota}" update="vhiculosList, princ, botones"
+                                         rendered="#{not mbFlota.responseOk}" />
+                        <p:commandButton value="Limpiar" icon="ui-icon-cancel" rendered="#{mbFlota.responseOk}" 
+                                         actionListener="#{mbFlota.limpiarFlota}" update="vhiculosList, princ" />
+                    </h:panelGrid>
+                    <br/>
+
+                    <p:dataTable var="vehiculo" value="#{mbFlota.listVehiculos}" id="vhiculosList" rendered="#{mbFlota.responseOk}"
+                                rows="5" 
+                                paginator="true" 
+                                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+                                rowsPerPageTemplate="5,10,15">
+                        <f:facet name="header">
+                            <p:commandButton icon="ui-icon-refresh" value="Listar" update="vhiculosList" style="margin-left: 10px"/>
+                            <p:commandButton value="Excel" ajax="false">
+                                <p:dataExporter type="xls" target="vhiculosList" fileName="ListadoFlota" />
+                            </p:commandButton>
+                            <p:commandButton value="Pdf" ajax="false">
+                                <p:dataExporter type="pdf" target="vhiculosList" fileName="ListadoFlota" preProcessor="#{mbFlota.preProcessPDF}"/>
+                            </p:commandButton>
+                        </f:facet>
+
+                        <p:column headerText="Chasis" sortBy="#{vehiculo.marcaChasis}" filterBy="#{vehiculo.marcaChasis}" filterMatchMode="contains" >
+                            <h:outputText value="#{vehiculo.marcaChasis}" />
+                        </p:column>
+
+                        <p:column headerText="Dominio" sortBy="#{vehiculo.dominio}" filterBy="#{vehiculo.dominio}" filterMatchMode="contains" >
+                            <h:outputText value="#{vehiculo.dominio}" />
+                        </p:column>
+
+                        <p:column headerText="Año" sortBy="#{vehiculo.anioModelo}" filterBy="#{vehiculo.anioModelo}" filterMatchMode="contains" >
+                            <h:outputText value="#{vehiculo.anioModelo}" />
+                        </p:column>
+
+                        <p:column headerText="Tipo Veh." sortBy="#{vehiculo.tipoVehiculo}" filterBy="#{vehiculo.tipoVehiculo}" filterMatchMode="contains" >
+                            <h:outputText value="#{vehiculo.tipoVehiculo}" />
+                        </p:column>
+
+                        <p:column headerText="RTO venc." sortBy="#{vehiculo.RTO.fechaVencimiento}" filterBy="#{vehiculo.RTO.fechaVencimiento}" filterMatchMode="contains" >
+                            <h:outputText value="#{vehiculo.RTO.fechaVencimiento}" />
+                        </p:column>
+                        
+                        <p:column headerText="RTO serie" sortBy="#{vehiculo.RTO.serieCertificado}" filterBy="#{vehiculo.RTO.serieCertificado}" filterMatchMode="contains" >
+                            <h:outputText value="#{vehiculo.RTO.serieCertificado}" />
+                        </p:column>
+                        
+                        <p:column headerText="RTO N°" sortBy="#{vehiculo.RTO.nroCertificado}" filterBy="#{vehiculo.RTO.nroCertificado}" filterMatchMode="contains" >
+                            <h:outputText value="#{vehiculo.RTO.nroCertificado}" />
+                        </p:column>
+
+                        <p:column headerText="Acc." style="width:35px" exportable="false" >
+                            <p:growl id="messages" showDetail="true" />
+                            <p:commandButton icon="ui-icon-zoomin" action="#{mbFlota.verVehiculo}" title="Ver Detalle">
+                                <f:setPropertyActionListener value="#{vehiculo}" target="#{mbFlota.vehiculo}" />
+                            </p:commandButton>                                     
+                        </p:column>  
+
+                    </p:dataTable>
+
+                    <p:dialog header="Ejecutando..." widgetVar="dlg1" minHeight="40">
+                        <h:outputText value="Por favor, aguarde mientras el servicio retorna la información solicitada" />
+                    </p:dialog>
+                </p:panel>
+            </h:form>
+        </ui:define> 
+    </ui:composition>
+</html>
