@@ -55,15 +55,23 @@ public class SrvFacade {
      */
     public void init(){
         int dia;
+        int mes;
         String sDia;
+        String sMes;
         Calendar fecha = Calendar.getInstance();
         dia = fecha.get(Calendar.DAY_OF_MONTH);
+        mes = fecha.get(Calendar.MONTH);
         if(dia > 9){
             sDia = Integer.toString(dia);
         }else{
             sDia = "0" + Integer.toString(dia);
         }
-        strFecha = Integer.toString(fecha.get(Calendar.YEAR)) + "-" + Integer.toString(fecha.get(Calendar.MONTH) + 1) + "-" + sDia; 
+        if(mes > 9){
+            sMes = Integer.toString(mes + 1);
+        }else{
+            sMes = "0" + Integer.toString(mes + 1);
+        }
+        strFecha = Integer.toString(fecha.get(Calendar.YEAR)) + "-" + sMes + "-" + sDia; 
         cliente = ClientBuilder.newClient();
         gson = new Gson();
     }    
