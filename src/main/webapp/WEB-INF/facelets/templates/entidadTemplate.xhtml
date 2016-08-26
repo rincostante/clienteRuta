@@ -11,7 +11,7 @@
                 font-size: 90%;
             }
         </style>
-        <link href="../../resources/css/estilos.css" type="text/css" rel="stylesheet" />
+        <link href="#{bundle.RutaAplicacion}/resources/css/estilos.css" type="text/css" rel="stylesheet" />
         <link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/resources/img/favicon.ico"/>
         <f:facet name="first">
             <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
@@ -22,7 +22,7 @@
         <p:layout fullPage="true">
             <p:layoutUnit id="top" styleClass="top" position="north" >
                 <h:panelGrid id="topPg" columns="3" styleClass="topPg" >
-                    <img src="../../resources/img/logoCoord80x270.jpg" />
+                    <img src="#{request.contextPath}/resources/img/Log_Presidencia_MinisterioAmbiente.gif" width="339" height="67" style="float: left" />
                     <p:outputLabel id="topOl" value="#{bundle.Aplicacion}" styleClass="topOl" style="font-size: xx-large" />
                 </h:panelGrid>
             </p:layoutUnit>
@@ -45,7 +45,8 @@
             </p:layoutUnit>
             
             <p:layoutUnit id="botton" styleClass="botton" position="south" >
-                <img src="../../resources/img/BloquePie.jpg" />
+                <img src="#{request.contextPath}/resources/img/BloquePieAzulCorto.jpg" />
+                <img src="#{request.contextPath}/resources/img/Log_Presidencia_MinisterioAmbienteChico.gif" style="margin-bottom:15px" />
             </p:layoutUnit>
         </p:layout>
     </h:body>     
